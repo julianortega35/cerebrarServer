@@ -1,16 +1,20 @@
 require("dotenv").config();
 
+const createError = require('http-errors');
 const express = require("express");
 const path = require("path");
 const logger = require("morgan");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const cors = require("cors");
 
 const auth = require("./routes/auth");
+const indexRouter = require('./routes/index');
+const thoughtsRouter = require('./routes/thoughts'); 
 
 // MONGOOSE CONNECTION
 mongoose
@@ -56,6 +60,8 @@ app.use(
   })
 );
 
+
+
 // MIDDLEWARE
 app.use(logger("dev"));
 app.use(bodyParser.json());
@@ -64,7 +70,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // ROUTER MIDDLEWARE
+app.use('/', indexRouter);
 app.use("/auth", auth);
+app.use('/', thoughtsRouter);
 
 // ERROR HANDLING
 // catch 404 and forward to error handler

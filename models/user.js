@@ -2,14 +2,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  username: String,
+  nickname: String,
   password: String,
-}, {
-  timestamps: {
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
-  },
+  description: String,
+  image: { type: String ,default: "https://ibalz.com/wp-content/uploads/2019/10/default-profile.png"},
+  myThoughts: [{type: mongoose.Types.ObjectId, ref:"Thoughts"}],
+  favourites:[{type: mongoose.Types.ObjectId, ref:"Thoughts"}],
 });
+
+userSchema.set('timestamps', true);
 
 const User = mongoose.model('User', userSchema);
 

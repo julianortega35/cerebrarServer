@@ -124,7 +124,7 @@ myThoughts model
     alternativeThoughts: String,
     intensity: Number,
     tasks: String,
-    category: {type: String, enum:["futuro", "trabajo", "salud", "dinero",    		"pareja","familia", "otra" ]},
+    category: {type: String, enum:["futuro", "trabajo", "salud", "dinero", "pareja","familia", "otra" ]},
     userId: {type: mongoose.Types.ObjectId, ref:"User"},
  }
 ```

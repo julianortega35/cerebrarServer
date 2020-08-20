@@ -6,8 +6,8 @@ const userSchema = new Schema({
   password: String,
   description: String,
   image: { type: String ,default: "https://ibalz.com/wp-content/uploads/2019/10/default-profile.png"},
-  myThoughts: [{type: mongoose.Types.ObjectId, ref:"Thoughts"}],
-  favourites:[{type: mongoose.Types.ObjectId, ref:"Thoughts"}],
+  myThoughts: [{type: mongoose.Types.ObjectId, ref:"thought"}],
+  favourites:[{type: mongoose.Types.ObjectId, ref:"thought"}],
 });
 
 userSchema.set('timestamps', true);

@@ -66,8 +66,7 @@ This is an app to track and evaluate negative automatic thoughts . The main obje
 - Home Page
 - Login
 - Sign Up 
-- Profile Page
-- Edit Profile 
+- Profile Page 
 - New Thoughts Page
 - Edit Thoughts 
 - Thoughts List
@@ -116,16 +115,27 @@ User model
 }
 ```
 
-myThoughts model
+Thought model
 
 ```
  {
-    automaticThoughts: String,
-    alternativeThoughts: String,
-    intensity: Number,
-    tasks: String,
-    category: {type: String, enum:["futuro", "trabajo", "salud", "dinero", "pareja","familia", "otra" ]},
-    userId: {type: mongoose.Types.ObjectId, ref:"User"},
+  	nickname: String,
+ 	 	password: String,
+  	description: String,
+  	image: { type: String ,default: "https://ibalz.com/wp-content/uploads/2019/10/default-			profile.png"},
+  	myThoughts: [{type: mongoose.Types.ObjectId, ref:"thought"}],
+  	favourites:[{type: mongoose.Types.ObjectId, ref:"thought"}],
+ }
+```
+
+otherUserAT model
+
+```
+ {
+  	authorId: {type: mongoose.Types.ObjectId, ref:"User"},
+    otherUserAT: { type: String , required: true},
+    thoughtId: {type: mongoose.Types.ObjectId, ref:"Thought"},
+    suggestedAlternativeThought: [{type: mongoose.Types.ObjectId, ref:"Thought"}]
  }
 ```
 

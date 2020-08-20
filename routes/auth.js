@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const User = require("../models/user");
 
+
 // HELPER FUNCTIONS
 
 const {
@@ -28,7 +29,7 @@ router.post(
     
         try{
     // chequea si el username ya existe en la BD
-        const usernameExist =await User.findOne({nickname}, "username");
+        const usernameExist =await User.findOne({nickname}, "nickname");
      // si el usuario ya existe, pasa el error a middleware error usando next()
         if (usernameExist) return next(createError(400));
         else {

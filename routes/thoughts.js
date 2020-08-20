@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
 
-const Thoughts = require("../models/thoughts");
+const Thought = require("../models/thought");
 const User = require("../models/user");
 
 
@@ -13,7 +13,7 @@ const {
 
 // GET route => to get all the thoughts
 router.get("/thoughts", isLoggedIn(),  (req, res, next) => {
-    Thoughts.find()
+    Thought.find()
       .then(allTheThoughts => {
         res.json(allTheThoughts );
       })
@@ -32,7 +32,7 @@ router.get('/thoughts/:id', isLoggedIn(), (req, res, next)=>{
       return;
     }
    
-    Thoughts.findById(req.params.id)
+    Thought.findById(req.params.id)
       .then(response => {
         res.status(200).json(response);
       })
@@ -62,11 +62,11 @@ router.get('/thoughts/:id', isLoggedIn(), (req, res, next)=>{
       // POST route => to create a new thought
     router.post("/thoughts/add", isLoggedIn(), (req, res, next) => {
      const userId =  req.session.currentUser;
-     Thoughts.create({
-    automaticThoughts: req.body.automaticThoughts,
-    alternativeThoughts: req.body.alternativeThoughts,
+     Thought.create({
+    automaticThought: req.body.automaticThought,
     intensity: req.body.intensity,
-    tasks: req.body.tasks,
+    alternativeThought: req.body.alternativeThought,
+    task: req.body.task,
     category: req.body.category,  
     })
       .then(thought => {

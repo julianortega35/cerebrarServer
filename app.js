@@ -16,6 +16,8 @@ const auth = require("./routes/auth");
 const indexRouter = require('./routes/index');
 const thoughtsRouter = require('./routes/thoughts'); 
 
+
+
 // MONGOOSE CONNECTION
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -72,7 +74,8 @@ app.use(express.static(path.join(__dirname, "public")));
 // ROUTER MIDDLEWARE
 app.use('/', indexRouter);
 app.use("/auth", auth);
-app.use('/', thoughtsRouter);
+app.use('/thoughts', thoughtsRouter);
+
 
 // ERROR HANDLING
 // catch 404 and forward to error handler

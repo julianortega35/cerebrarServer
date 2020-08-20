@@ -24,18 +24,18 @@ router.post(
       // revisa que se hayan completado los valores de username y password usando la función helper
     validationLoggin(),
     async (req,res,next) => {
-        const { username, password} = req.body;
+        const { nickname, password} = req.body;
     
         try{
     // chequea si el username ya existe en la BD
-        const usernameExist =await User.findOne({username}, "username");
+        const usernameExist =await User.findOne({nickname}, "username");
      // si el usuario ya existe, pasa el error a middleware error usando next()
         if (usernameExist) return next(createError(400));
         else {
     // en caso contratio, si el usuario no existe, hace hash del password y crea un nuevo usuario en la BD
         const salt = bcrypt.genSaltSync(saltRounds);
         const hashPass = bcrypt.hashSync(password, salt);
-        const newUser = await User.create ({username, password: hashPass});
+        const newUser = await User.create ({nickname, password: hashPass});
     // luego asignamos el nuevo documento user a req.session.currentUser y luego enviamos la respuesta en json
         req.session.currentUser = newUser;
         res.status(200) // OK
@@ -58,10 +58,10 @@ router.post(
     isNotLoggedIn(),
     validationLoggin(),
     async (req,res,next) => {
-        const { username, password } = req.body;
+        const { nickname, password } = req.body;
         try{
              // revisa si el usuario existe en la BD
-             const user = await User.findOne({username});
+             const user = await User.findOne({nickname});
             // si el usuario no existe, pasa el error al middleware error usando next()
             if(!user) {
                 next (createError(404));
@@ -114,5 +114,10 @@ router.get("/me", isLoggedIn(), (req, res, next) => {
     req.session.currentUser.password = "*";
     res.json(req.session.currentUser);
   });
+
+
+
 module.exports = router;
+
+
 

@@ -126,7 +126,7 @@ mongoose
       const firstThoughtsIndex = i * 2; //  0,  2,  4
       const secondThoughtsIndex = i * 2 + 1; //  1,  3,  5
       const firstThought = thought [firstThoughtsIndex];
-      const secondThought = thought[secondThoughtsInde];
+      const secondThought = thought[secondThoughtsIndex];
       firstThought.userId = user._id;
       secondThought.userId = user._id;
       updatedThoughts.push(firstThought, secondThought);

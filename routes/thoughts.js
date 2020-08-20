@@ -7,8 +7,6 @@ const Thoughts = require("../models/thoughts");
 
 const {
     isLoggedIn,
-    isNotLoggedIn,
-    validationLoggin,
 } = require ("../helpers/middlewares");
 
 
@@ -25,7 +23,7 @@ router.get("/thoughts", isLoggedIn(),  (req, res, next) => {
 
 
 
-// GET route => to get a specific project/detailed view
+// GET route => to get a specific thought
 router.get('/thoughts/:id', isLoggedIn(), (req, res, next)=>{
 
     if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -43,7 +41,7 @@ router.get('/thoughts/:id', isLoggedIn(), (req, res, next)=>{
   })
 
     // PUT route => to update a specific Thought
-    router.put('/thoughts/:id', isLoggedIn(), (req, res, next)=>{
+    router.put('/thoughts/edit/:id', isLoggedIn(), (req, res, next)=>{
   
         if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
           res.status(400).json({ message: 'Specified id is not valid' });
@@ -68,7 +66,8 @@ router.get('/thoughts/:id', isLoggedIn(), (req, res, next)=>{
     alternativeThoughts: req.body.alternativeThoughts,
     intensity: req.body.intensity,
     tasks: req.body.tasks,
-    category: req.body.tasks,
+    category: [],  
+    
       
     })
       .then(response => {
@@ -81,7 +80,7 @@ router.get('/thoughts/:id', isLoggedIn(), (req, res, next)=>{
 
 
     // DELETE route => to delete a specific thought
-    router.delete('/thought/:id', isLoggedIn(), (req, res, next)=>{
+    router.delete('/thoughts/:id', isLoggedIn(), (req, res, next)=>{
   
         if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
           res.status(400).json({ message: 'Specified id is not valid' });

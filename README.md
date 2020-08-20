@@ -138,7 +138,6 @@ myThoughts model
 | POST        | `/auth/signup`       | {nickname, password}                                         | 201            | 404          | Checks if fields not empty and user does not exists, then create user with encrypted password, and store user in session |
 | POST        | `/auth/login`        | {nickname, password}                                         | 200            | 401          | Checks if fields not empty, if user exists, and if password matches, then stores user in session |
 | GET         | `/auth/profile`      | Saved session                                                | 200            | 404          | Check if user is logged in and return user info              |
-| PUT         | `/profile/edit`      | {nickname, image, descrition, city}                          | 200            | 400          | edit profile                                                 |
 | POST        | `/auth/logout`       | (empty)                                                      | 204            | 400          | Logs out the user                                            |
 | GET         | `/thoughts`          |                                                              |                | 400          | Show list of thoughts from all users                         |
 | GET         | `/thoughts/:id`      | {id}                                                         |                |              | Show specific thought details                                |

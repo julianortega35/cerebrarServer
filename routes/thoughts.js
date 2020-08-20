@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const router = express.Router();
 
 const Thoughts = require("../models/thoughts");
+const User = require("../models/user");
 
 
 const {
@@ -60,19 +61,21 @@ router.get('/thoughts/:id', isLoggedIn(), (req, res, next)=>{
 
       // POST route => to create a new thought
     router.post("/thoughts/add", isLoggedIn(), (req, res, next) => {
-    Thoughts.create({
-
+     const userId =  req.session.currentUser;
+     Thoughts.create({
     automaticThoughts: req.body.automaticThoughts,
     alternativeThoughts: req.body.alternativeThoughts,
     intensity: req.body.intensity,
     tasks: req.body.tasks,
-    category: [],  
-    
-      
+    category: req.body.category,  
     })
-      .then(response => {
-        res.json(response);
+      .then(thought => {
+          console.log(thought)
+        User.findByIdAndUpdate(userId, { $push: { myThoughts: thought._id } })
+        .then((thought) => {
+            res.status(201).json(thought) 
       })
+    })
       .catch(err => {
         res.json(err);
       });

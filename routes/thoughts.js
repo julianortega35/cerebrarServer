@@ -11,6 +11,10 @@ const {
 } = require ("../helpers/middlewares");
 
 
+
+  
+
+
 // GET route => to get all the thoughts
 router.get("/", isLoggedIn(),  (req, res, next) => {
     Thought.find()

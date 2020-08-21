@@ -16,6 +16,8 @@ require('dotenv').config();
 const auth = require("./routes/auth");
 const indexRouter = require('./routes/index');
 const thoughtsRouter = require('./routes/thoughts'); 
+const user = require("./routes/user");
+const { profile } = require("console");
 
 
 
@@ -35,7 +37,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: [process.env.PUBLIC_DOMAIN, "https://cerebrar-app.web.app"]
+    origin: [process.env.PUBLIC_DOMAIN]
 
    
   })
@@ -79,6 +81,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use('/', indexRouter);
 app.use("/auth", auth);
 app.use('/thoughts', thoughtsRouter);
+app.use("/", user);
 
 
 // ERROR HANDLING

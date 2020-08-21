@@ -35,7 +35,9 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: [process.env.PUBLIC_DOMAIN],
+    origin: [process.env.PUBLIC_DOMAIN, "https://cerebrar-app.web.app"]
+
+   
   })
 );
 // app.use((req, res, next) => {
@@ -47,7 +49,20 @@ app.use(
 // });
 
 // SESSION MIDDLEWARE
-
+app.use(
+  session({
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection,
+      ttl: 24 * 60 * 60, // 1 day
+    }),
+    secret: process.env.SECRET_SESSION,
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000,
+    },
+  })
+);
 
 
 // MIDDLEWARE
@@ -56,6 +71,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+
+
 
 // ROUTER MIDDLEWARE
 app.use('/', indexRouter);

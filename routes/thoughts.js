@@ -12,7 +12,7 @@ const {
 
 
 // GET route => to get all the thoughts
-router.get("/thoughts", isLoggedIn(),  (req, res, next) => {
+router.get("/", isLoggedIn(),  (req, res, next) => {
     Thought.find()
       .then(allTheThoughts => {
         res.json(allTheThoughts );
@@ -25,7 +25,7 @@ router.get("/thoughts", isLoggedIn(),  (req, res, next) => {
 
 
 // GET route => to get a specific thought
-router.get('/thoughts/:id', isLoggedIn(), (req, res, next)=>{
+router.get('/:id', isLoggedIn(), (req, res, next)=>{
 
     if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
       res.status(400).json({ message: 'Specified id is not valid' });
@@ -42,14 +42,23 @@ router.get('/thoughts/:id', isLoggedIn(), (req, res, next)=>{
   })
 
     // PUT route => to update a specific Thought
-    router.put('/thoughts/edit/:id', isLoggedIn(), (req, res, next)=>{
-  
+    router.put('/edit/:id', isLoggedIn(), (req, res, next)=>{
+     
         if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
           res.status(400).json({ message: 'Specified id is not valid' });
           return;
         }
       
-        Thoughts.findByIdAndUpdate(req.params.id, req.body)
+        const {automaticThought, 
+          intensity,
+          alternativeThought, 
+          task, 
+          category} = req.body
+        Thought.findByIdAndUpdate(req.params.id, {automaticThought, 
+          intensity,
+          alternativeThought, 
+          task, 
+          category})
           .then(() => {
             res.json({ message: `Project with ${req.params.id} is updated successfully.` });
           })
@@ -60,7 +69,7 @@ router.get('/thoughts/:id', isLoggedIn(), (req, res, next)=>{
 
 
       // POST route => to create a new thought
-    router.post("/thoughts/add", isLoggedIn(), (req, res, next) => {
+    router.post("/add", isLoggedIn(), (req, res, next) => {
      const userId =  req.session.currentUser;
      Thought.create({
     automaticThought: req.body.automaticThought,
@@ -83,7 +92,7 @@ router.get('/thoughts/:id', isLoggedIn(), (req, res, next)=>{
 
 
     // DELETE route => to delete a specific thought
-    router.delete('/thoughts/:id', isLoggedIn(), (req, res, next)=>{
+    router.delete('/:id', isLoggedIn(), (req, res, next)=>{
   
         if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
           res.status(400).json({ message: 'Specified id is not valid' });

@@ -11,6 +11,7 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const cors = require("cors");
+require('dotenv').config();
 
 const auth = require("./routes/auth");
 const indexRouter = require('./routes/index');
@@ -21,9 +22,8 @@ const thoughtsRouter = require('./routes/thoughts');
 // MONGOOSE CONNECTION
 mongoose
   .connect(process.env.MONGODB_URI, {
-    useUnifiedTopology: true,
-    keepAlive: true,
     useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
   .then(() => console.log(`Connected to database`))
   .catch((err) => console.error(err));
@@ -47,20 +47,6 @@ app.use(
 // });
 
 // SESSION MIDDLEWARE
-app.use(
-  session({
-    store: new MongoStore({
-      mongooseConnection: mongoose.connection,
-      ttl: 24 * 60 * 60, // 1 day
-    }),
-    secret: process.env.SECRET_SESSION,
-    resave: true,
-    saveUninitialized: true,
-    cookie: {
-      maxAge: 24 * 60 * 60 * 1000,
-    },
-  })
-);
 
 
 

@@ -31,6 +31,7 @@ router.get("/", isLoggedIn(),  (req, res, next) => {
 // GET route => to get a specific thought
 router.get('/:id', isLoggedIn(), (req, res, next)=>{
     Thought.findById(req.params.id)
+    .populate("userId")
       .then(response => {
         res.status(200).json(response);
       })
@@ -60,7 +61,8 @@ router.get('/:id', isLoggedIn(), (req, res, next)=>{
     intensity: req.body.intensity,
     alternativeThought: req.body.alternativeThought,
     task: req.body.task,
-    category: req.body.category,  
+    category: req.body.category, 
+    userId: userId  
     })
       .then(thought => {
           console.log(thought)
@@ -77,8 +79,7 @@ router.get('/:id', isLoggedIn(), (req, res, next)=>{
 
     // DELETE route => to delete a specific thought
     router.delete('/:id', isLoggedIn(), (req, res, next)=>{
-      const {automaticThought, intensity,alternativeThought, task, category} = req.body
-      Thought.findByIdAndRemove(req.params.id, {automaticThought, intensity, alternativeThought, task, category})
+      Thought.findByIdAndRemove(req.params.id)
         .then(() => {
           res.json({ message: `Project with ${req.params.id} is removed successfully.` });
         })

@@ -14,9 +14,10 @@ const {
 // GET route => to get profile info
 router.get("/profile", isLoggedIn(),  (req, res, next) => {
     const _id = req.session.currentUser._id;
-    User.findOne({_id})
+    User.findById(_id)
+    .populate("myThoughts")
     .then((user)=>{
-      res.json({user});
+      res.json(user);
       
     })
     .catch((error)=>{

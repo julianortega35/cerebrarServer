@@ -37,7 +37,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: [process.env.PUBLIC_DOMAIN]
+    origin: [process.env.PUBLIC_DOMAIN, "http://cerebrar.herokuapp.com"]
 
    
   })
@@ -83,6 +83,11 @@ app.use("/auth", auth);
 app.use('/thoughts', thoughtsRouter);
 app.use("/", user);
 
+
+app.use((req, res) => {
+  // If no routes match, send them the React HTML.
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 // ERROR HANDLING
 // catch 404 and forward to error handler

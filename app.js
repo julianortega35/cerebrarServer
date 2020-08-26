@@ -37,10 +37,8 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: [process.env.PUBLIC_DOMAIN, "http://cerebrar.herokuapp.com"]
-
-   
-  })
+    origin: [process.env.PUBLIC_DOMAIN, 'https://cerebrar.herokuapp.com', 'http://cerebrar.herokuapp.com'],
+  }),
 );
 // app.use((req, res, next) => {
 //   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');

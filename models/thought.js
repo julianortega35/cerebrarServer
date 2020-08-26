@@ -6,7 +6,7 @@ const thoughtSchema = new Schema({
     intensity: { type: Number , required: true},
     alternativeThought: { type: String , required: true},
     task: { type: String , required: true},
-    category: {type: String, enum:["futuro", "trabajo", "salud", "dinero", "pareja","familia", "otra" ], required: true},
+    category: {type: String, enum:["Todas las categorías", "Futuro", "Trabajo", "Salud", "Dinero", "Pareja","Familia", "Otra" ], required: true},
     userId: {type: mongoose.Types.ObjectId, ref:"User"},
     suggestedAlternativeThought: [{type: mongoose.Types.ObjectId, ref:"otherUserAT"}]
 

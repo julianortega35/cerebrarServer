@@ -87,12 +87,12 @@ router.post(
 
 // revisa si el usuario está logueado usando la función helper (chequea si la sesión existe), y luego destruimos la sesión
 router.post("/logout", isLoggedIn(), (req, res, next) => {
-    req.session.destroy();
-    //  - setea el código de estado y envía de vuelta la respuesta
-    res
+    req.session.destroy(()  =>{
+      res
       .status(204) //  No Content
       .send();
     return;
+    });
   });
 
 // GET '/private'   --> Only for testing
